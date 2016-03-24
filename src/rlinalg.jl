@@ -25,7 +25,7 @@ function randnn(el, m::Int, normalize::Bool=true)
     elseif el <: Complex
         Ω = randn(m) + im*randn(m)
     else
-        throw(ValueError("Unsupported element type: $el"))
+        throw(ArgumentError("Unsupported element type: $el"))
     end
     normalize ? Ω/norm(Ω) : Ω
 end
@@ -35,7 +35,7 @@ function randnn(el, m::Int, n::Int, normalize::Bool=true)
     elseif el <: Complex
         Ω = randn(m, n) + im*randn(m, n)
     else
-        throw(ValueError("Unsupported element type: $el"))
+        throw(ArgumentError("Unsupported element type: $el"))
     end
     normalize || return Ω
     for i=1:n
@@ -305,4 +305,3 @@ function *(A, Ω::srft)
     B = vcat([fft(A[i,:]) for i=1:m]...) #Factor of √n cancels out
     B[:, randperm(n)[1:Ω.l]]
 end
-
